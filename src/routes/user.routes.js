@@ -23,8 +23,7 @@ router.route("/register").post(
   ]),
   registerUser
 );
-router.route("/login", loginUser);
-
+router.route("/login").post(loginUser);
 // secure route
 router.route("/logout", verifyJWT, logoutUser);
 router.route("/refresh-token", refreshAccessToken);
