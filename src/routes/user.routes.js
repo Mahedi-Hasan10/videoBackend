@@ -34,14 +34,17 @@ router.route("/login").post(loginUser);
 // secure route
 router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/refresh-token").post(refreshAccessToken);
-router.route("/change-password").post(verifyJWT,changeCurrentPassword)
-router.route("/profile").get(verifyJWT, getCurrentUser)
-router.route("/update-profile").patch(verifyJWT, updateAccountDetails)
-router.route("/avatar").post(verifyJWT,upload.single("avatar"),updateUserAvatar)
-router.route("/cover-image").post(verifyJWT,upload.single("coverImage"),updateUserCover)
+router.route("/change-password").post(verifyJWT, changeCurrentPassword);
+router.route("/profile").get(verifyJWT, getCurrentUser);
+router.route("/update-profile").patch(verifyJWT, updateAccountDetails);
+router
+  .route("/avatar")
+  .post(verifyJWT, upload.single("avatar"), updateUserAvatar);
+router
+  .route("cover-image")
+  .post(verifyJWT, upload.single("coverImage"), updateUserCover);
 //get user chanel id from params
-router.route("/channel/:id").get(verifyJWT, getUserChannelProfile)
-router.route("/history").get(verifyJWT, getUserWatchHistory)
-
+router.route("/channel/:id").get(verifyJWT, getUserChannelProfile);
+router.route("/history").get(verifyJWT, getUserWatchHistory);
 
 export default router;

@@ -1,0 +1,73 @@
+===========Aggregation Pipeline Basic Documentation===============
+
+6. List All Unique Eye color present in the collection ? ( $group )
+[
+  {
+    $group: {
+      _id: "$eyeColor"
+    }
+  }
+]
+
+This MongoDB aggregation pipeline groups documents by the eyeColor field, creating a separate group for each unique eye color in the collection. The result will list the distinct eye colors found among the documents.
+
+
+7. What is the average number of tags per user?
+[
+  {
+    $addFields: {
+      totalTags: {
+        $size: {$ifNull:["$tags", []]}
+      }
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      average:{
+        $avg:"$totalTags"
+      }
+      
+    }
+  }
+]
+
+8. How many users have'enim' as one of theirtags?
+[
+  {
+    $match: {
+      tags: "enim"
+    }
+  },
+  {
+    $count: 'string'
+  }
+]
+
+9. What are the names and age of users who are inactive and have 'velit' as a tag?
+[
+  {
+    $match: {
+      tags: "velit",
+      isActive:false
+    }
+  },
+  {
+    $project: {
+      name:1,
+      age:1
+    }
+  }
+]
+
+10. How many users phone number is starting with '+1 (940)'?
+[
+  {
+    $match: {
+      "company.phone": /^\+1 \(940\)/
+    }
+  },
+  {
+    $count: 'count'
+  }
+]

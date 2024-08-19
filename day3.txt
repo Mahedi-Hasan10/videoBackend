@@ -1,0 +1,38 @@
+===========Aggregation Pipeline Basic Documentation===============
+
+11. Who has registered the most recently?
+[
+  {
+    $sort: {
+      registered: -1
+    }
+  },{
+    $limit: 4
+  },
+  {
+    $project: {
+      favoriteFruit:1,
+      name:1,
+      registered:1
+    }
+  }
+]
+
+12. Categorized user by their favorite fruits?
+[
+  {
+    $group: {
+      _id: "$favoriteFruit",
+      users:{$push:"$name"},
+    }
+  }
+]
+
+13. How Many users has 'ad' as the second tag in their list of tags?
+[
+  {
+    $match: {
+      "tags.1":"ad"
+    }
+  }
+]

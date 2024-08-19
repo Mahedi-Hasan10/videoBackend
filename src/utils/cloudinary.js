@@ -23,5 +23,28 @@ const uploadOnCloudinary = async (localFilePath) => {
     return null;
   }
 };
+const removeFromCloudinary = async (fileUrl, resource_type) => {
+  try {
+    if (!fileUrl) throw new Error("File URL is required");
 
-export { uploadOnCloudinary };
+    // Extract the public ID from the URL
+    const publicId = fileUrl.split("/").slice(-2).join("/").split(".")[0];
+
+    // Remove video from Cloudinary
+    const result = await cloudinary.api.delete_resources([publicId], {
+      type: "upload",
+      resource_type: resource_type,
+    });
+    console.log(result);
+    // if (result.deleted[publicId] !== "deleted") {
+    //   throw new Error("Failed to remove file from Cloudinary");
+    // }
+    // return result;
+    return;
+  } catch (error) {
+    console.error("Error removing from Cloudinary:", error);
+    return null;
+  }
+};
+
+export { uploadOnCloudinary, removeFromCloudinary };
